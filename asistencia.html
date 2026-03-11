@@ -11,6 +11,9 @@
     <button id="btnAgregar">+ Agregar persona</button>
     <button id="btnRestar">- Quitar persona</button>
     <button id="btnReset">Resetear</button>
+    <input id="nombreServicio" type="text" placeholder="Ej: Servicio dominical">
+    <button id="btnGuardarNombre">Guardar</button>
+    <p>Servicio: <span id="displayNombre">Sin nombre</span></p>
 
     <script>
         let contador = 0
@@ -18,6 +21,10 @@
         const btnAgregar = document.getElementById("btnAgregar")
         const btnRestar = document.getElementById("btnRestar")
         const btnReset = document.getElementById("btnReset")
+
+        const inputNombre = document.getElementById("nombreServicio")
+        const btnGuardarNombre = document.getElementsById("btnGuardarNombre")
+        const displayNombre = document.getElementById("displayNombre")
 
         btnAgregar.addEventListener("click", function(){
             if(contador >= 200){
@@ -56,6 +63,10 @@
                 display.style.color = "green"
             }
         }
+
+        btnGuardarNombre.addEvent("click", function(){
+            displayNombre.textContent = inputNombre.value
+        })
     </script>
 </body>
 </html>
