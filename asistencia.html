@@ -20,6 +20,11 @@
         const btnReset = document.getElementById("btnReset")
 
         btnAgregar.addEventListener("click", function(){
+            if(contador >= 200){
+                alert("Se llego a la capacidad maxima!")
+                btnAgregar.disabled = true
+                return
+            }
             contador++
             display.textContent = contador
         })
