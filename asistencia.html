@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Asistencia de los Dominguitos</title>
+</head>
+<body>
+    <h1>Asistrencia del servicio</h1>
+    <p>Total: <span id="contador">0</span></p>
+
+    <button id="btnAgregar">+ Agregar persona</button>
+    <button id="btnRestar">- Quitar persona</button>
+    <button id="btnReset">Resetear</button>
+
+    <script>
+        let contador = 0
+        const display = document.getElementById("contador")
+        const btnAgregar = document.getElementById("btnAgregar")
+        const btnRestar = document.getElementById("btnRestar")
+        const btnReset = document.getElementById("btnReset")
+
+        btnAgregar.addEventListener("click", function(){
+            contador++
+            display.textContent = contador
+        })
+
+        btnRestar.addEventListener("click", function(){
+            if (contador > 0){
+                contador--
+                display.textContent = contador
+            }
+        })
+
+        btnReset.addEventListener("click", function(){
+            contador = 0
+            display.textContent = contador
+        })
+    </script>
+</body>
+</html>
