@@ -4,7 +4,7 @@
     <title>Asistencia Iglesia Buena Vista</title>
 </head>
 <body>
-    <h1>Asistrencia del servicio</h1>
+    <h1>Asistencia del servicio</h1>
     <p>Total: <span id="contador">0</span></p>
     <h3>Fecha: 11 / Marzo / 2026</h3>
 
@@ -16,57 +16,63 @@
     <p>Servicio: <span id="displayNombre">Sin nombre</span></p>
 
     <script>
-        let contador = 0
         const display = document.getElementById("contador")
         const btnAgregar = document.getElementById("btnAgregar")
         const btnRestar = document.getElementById("btnRestar")
         const btnReset = document.getElementById("btnReset")
-
         const inputNombre = document.getElementById("nombreServicio")
-        const btnGuardarNombre = document.getElementsById("btnGuardarNombre")
+        const btnGuardarNombre = document.getElementById("btnGuardarNombre")
         const displayNombre = document.getElementById("displayNombre")
 
-        btnAgregar.addEventListener("click", function(){
-            if(contador >= 200){
-                alert("Se llego a la capacidad maxima!")
-                btnAgregar.disabled = true
-                return
-            }
-            contador++
-            display.textContent = contador
-            colorUpdate()
+        async function cargarAsistencia() {
+            const respuesta = await fetch("http://127.0.0.1:8000/asistencia")
+            const datos = await respuesta.json()
+            display.textContent = datos.total
+            colorUpdate(datos.total)
+        }
+
+        btnAgregar.addEventListener("click", async function() {
+            const respuesta = await fetch("http://127.0.0.1:8000/asistencia/agregar", {
+                method: "POST"
+            })
+            const datos = await respuesta.json()
+            display.textContent = datos.total
+            colorUpdate(datos.total)
         })
 
-        btnRestar.addEventListener("click", function(){
-            if (contador > 0){
-                contador--
-                display.textContent = contador
-                btnAgregar.disabled = false
-                colorUpdate()
-            }
+        btnRestar.addEventListener("click", async function() {
+            const respuesta = await fetch("http://127.0.0.1:8000/asistencia/restar", {
+                method: "POST"
+            })
+            const datos = await respuesta.json()
+            display.textContent = datos.total
+            colorUpdate(datos.total)
         })
 
-        btnReset.addEventListener("click", function(){
-            contador = 0
-            display.textContent = contador
-            colorUpdate()
+        btnReset.addEventListener("click", async function() {
+            const respuesta = await fetch("http://127.0.0.1:8000/asistencia/resetear", {
+                method: "POST"
+            })
+            const datos = await respuesta.json()
+            display.textContent = datos.total
+            colorUpdate(datos.total)
         })
 
-        function colorUpdate(){
-            if (contador < 50){
+        btnGuardarNombre.addEventListener("click", function() {
+            displayNombre.textContent = inputNombre.value
+        })
+
+        function colorUpdate(total) {
+            if (total < 50) {
                 display.style.color = "red"
-            }
-            else if (contador >= 50 && contador <= 150){
+            } else if (total >= 50 && total <= 150) {
                 display.style.color = "yellow"
-            }
-            else{
+            } else {
                 display.style.color = "green"
             }
         }
 
-        btnGuardarNombre.addEvent("click", function(){
-            displayNombre.textContent = inputNombre.value
-        })
+        cargarAsistencia()
     </script>
 </body>
 </html>
